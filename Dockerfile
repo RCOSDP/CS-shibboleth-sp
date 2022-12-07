@@ -1,12 +1,12 @@
-FROM centos:centos7
+FROM rockylinux:8
 
-LABEL maintainer="Unicon, Inc."
+LABEL maintainer="Research Center for Open Science and data platform(RCOS) in National Institute of Informatics, Japan"
 
 #See https://docs.shib.ncsu.edu/docs/install/rpmrepos.html
 COPY security:shibboleth.repo /etc/yum.repos.d/security:shibboleth.repo
 
 RUN yum -y update \
-    && yum -y install wget httpd shibboleth-3.3.0-1 mod_ssl \
+    && yum -y install wget httpd shibboleth-3.4.0-1 mod_ssl \
     && yum -y clean all
 
 COPY httpd-shibd-foreground /usr/local/bin/

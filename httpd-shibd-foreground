@@ -1,7 +1,12 @@
 #!/bin/bash
 
+set -xe
+
 # Apache and Shibd gets grumpy about PID files pre-existing from previous runs
 rm -f /etc/httpd/run/httpd.pid /var/lock/subsys/shibd
+
+# Generate certificates
+/usr/libexec/httpd-ssl-gencerts
 
 # Make sure /etc/shibboleth/shibd-redhat is executable
 chmod +x /etc/shibboleth/shibd-redhat

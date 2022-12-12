@@ -1,0 +1,41 @@
+name: image
+
+on:
+  push:
+    branches:
+      - 'master'
+      - 'main'
+      - 'fix/**'
+      - 'feature/**'
+    tags:
+      - 'v*'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Setup GCLOUD
+        uses: google-github-actions/setup-gcloud@v0
+      - name: Set RELEASE_VERSION
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - name: Set IMAGE_TAG
+        run: echo "IMAGE_TAG=$(echo $RELEASE_VERSION | sed 's,/,-,g')" >> $GITHUB_ENV
+      - name: Versions
+        run: |
+          echo GITHUB_REF: "$GITHUB_REF"
+          echo RELEASE_VERSION: "$RELEASE_VERSION"
+          echo IMAGE_TAG: "$IMAGE_TAG"
+      -
+        name: Build and push
+        uses: RafikFarhad/push-to-gcr-github-action@v4
+        with:
+          gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          registry: gcr.io
+          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+          image_name: ${{ secrets.IMAGE_PREFIX }}shibboleth-sp
+          image_tag: ${{ env.IMAGE_TAG }}
+          dockerfile: ./Dockerfile

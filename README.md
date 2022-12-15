@@ -1,54 +1,25 @@
 ## Overview
-This Docker image is Apache 2.4 with Shibboleth SP 3.0.3 installed running on CentOS 7.
+This Docker image is Apache 2.4 with Shibboleth SP 3.4.0 installed running on Rocky Linux 8.
 
 This image can be used as a base image overriding the configuration with local changes.
 
 Ports 80 and 443 are exposed for traffic.
 
-A working example of how this image can be used can be found at https://github.com/UniconLabs/dockerized-idp-testbed.
-
 ## Logs
 Logs for httpd and shibd have been configured to output to the console so that Docker's logging facilities are supported. Each of these logs have been prefaced with an identifier that indicates the type of entry being outputted: `httpd-error`, `httpd-combined`, `sp-shibd`, `sp-native`, `sp-transaction`, `sp-sign`, etc.
-
-## Use as a Base
-This image is ideal for use as a base image for one's own deployment. 
-
-For example, add your SP configurations to `./shibboleth-sp` and you app files to `./appfiles/`.
-
-Next, assuming the Dockerfile is similar to this example:
-
-```
-FROM unicon/shibboleth-sp
-
-ADD /shibboleth-sp/ /etc/shibboleth/
-ADD /appfiles/ /var/www/html/ 
-```
-
-> This will take the base image that is available in the Docker repository and download it. Next, it overrides all of the base files with your local configuration.
-
-The dependant image can be built by running:
-
-```
-docker build --tag="<org_id>/<image_name>" .
-```
-
-Now, just execute the new image:
-
-```
-$ docker run -dP --name="app-local-test" <org_id>/<image_name> 
-```
 
 ## Building
 
 From source:
 
 ```
-$ docker build --tag="<org_id>/shibboleth-sp" github.com/unicon/shibboleth-sp-dockerized
+$ docker build --tag="<org_id>/shibboleth-sp" github.com/RCOSDP/CS-shibboleth-sp
 ```
 
 ## Author
 
   * John Gasper (<jgasper@unicon.net>)
+  * Research Center for Open Science and data platform(RCOS) in National Institute of Informatics, Japan
 
 
 ## LICENSE

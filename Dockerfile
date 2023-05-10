@@ -11,6 +11,7 @@ RUN yum -y update \
 
 COPY httpd-shibd-foreground /usr/local/bin/
 COPY shibboleth/ /etc/shibboleth/
+COPY img/ /var/www/html/img/
 
 RUN test -d /var/run/lock || mkdir -p /var/run/lock \
     && test -d /var/lock/subsys/ || mkdir -p /var/lock/subsys/ \

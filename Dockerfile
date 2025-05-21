@@ -6,7 +6,7 @@ LABEL maintainer="Research Center for Open Science and data platform(RCOS) in Na
 COPY security:shibboleth.repo /etc/yum.repos.d/security:shibboleth.repo
 
 RUN yum -y update \
-    && yum -y install wget httpd shibboleth-3.4.0-1 mod_ssl \
+    && yum -y install wget httpd shibboleth-3.5.0 mod_ssl \
     && yum -y clean all
 
 COPY httpd-shibd-foreground /usr/local/bin/
